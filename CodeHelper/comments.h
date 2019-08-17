@@ -12,9 +12,9 @@ class Comments
 {
 public:
 	Comments(CommentStyle comment_style);
-	Comments() : Comments(CommentStyle::Default) {}
+	Comments();
 
-	QString get_block_comment(QString text, short unsigned int length = 50);
+	QString get_block_comment(QString text, int length = 90);
 
 private:
 	CommentStyle m_Style;
