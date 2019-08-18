@@ -1,0 +1,13 @@
+
+# Qt creator files
+*.pro.user
+
+# Build makefiles
+*Makefile
+.qmake.stash
+
+# Jupyter notebooks checkpoints
+*.ipynb_checkpoints
+
+# Build
+debug/*
