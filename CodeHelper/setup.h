@@ -1,12 +1,20 @@
 #ifndef SETUP_H
 #define SETUP_H
 
-#include <QString>
+#include <QStringList>
 #include <iostream>
 
 
 enum Language { Python, CPP };
 extern Language CURRENT_LANGUAGE;
+
+
+const int DEFAULT_COMMENT_BLOCK_WIDTH = 40;
+const QString DEFAULT_FILLING_CHAR("=");
+const QString DEFAULT_COMMENT_STYLE("Medium");
+const bool DEFAULT_FILLING_CHARS_LINKAGE(true);
+
+const QStringList COMMENTS_FILLING_CHARACTERS(QStringList() << "=" << "-" << "+" << "#");
 
 class TextHandler {
 public:

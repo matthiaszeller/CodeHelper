@@ -56,7 +56,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
@@ -64,17 +64,144 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Coding style</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="1">
+            <widget class="QComboBox" name="comboBox_prettify_comment_char">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Filling character 2:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="comboBox_prettify_filling_char"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="comboBox_prettify_style">
+             <item>
+              <property name="text">
+               <string>Light</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Medium</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Heavy</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Style:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QComboBox" name="comboBox_prettify_filling_char2"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="lineEdit_prettify_spacing"/>
+           </item>
+           <item row="0" column="2" colspan="5">
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Comment character : </string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Spacing: </string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Filling character : </string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QCheckBox" name="checkBox_prettify_link">
+             <property name="text">
+              <string>Link</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
            <string>Comments</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <layout class="QFormLayout" name="formLayout">
+            <layout class="QFormLayout" name="formLayout"/>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0">
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>Comment block: </string>
+                <string>Create comment block :</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QSlider" name="horizontalSlider_prettify_comment_block">
+               <property name="minimum">
+                <number>10</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>2</number>
+               </property>
+               <property name="value">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
                </property>
               </widget>
              </item>
@@ -87,9 +214,29 @@
                 <string/>
                </property>
                <property name="placeholderText">
-                <string>Nice block section</string>
+                <string>block name ...</string>
                </property>
               </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QLabel" name="label_prettify_block_comment_width">
+               <property name="text">
+                <string>10</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </item>
@@ -129,9 +276,9 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="pushButton_prettify_copy">
                <property name="text">
-                <string>PushButton</string>
+                <string>Copy</string>
                </property>
               </widget>
              </item>
