@@ -20,4 +20,5 @@ private:
 	CommentStyle m_Style;
 };
 
+
 #endif // COMMENTS_H
