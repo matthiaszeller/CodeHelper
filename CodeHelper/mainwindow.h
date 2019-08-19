@@ -48,6 +48,7 @@ private slots:
 	void on_horizontalSlider_prettify_comment_block_sliderMoved(int);
 	void on_pushButton_prettify_copy_clicked(bool);
 	void on_comboBox_prettify_filling_char_currentTextChanged(QString);
+	void on_comboBox_prettify_filling_char2_currentTextChanged(QString);
 };
 
 #endif // MAINWINDOW_H

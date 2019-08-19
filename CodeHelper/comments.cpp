@@ -13,6 +13,8 @@ Comments::Comments(CommentStyle comment_style):
 // ---------------
 
 QString Comments::get_block_comment(QString text, int length) {
+	// filling char 1 for upper and lower lines
+	// filling char 2 for middle line
 	QString t;
 	QString c = TextHandler::get_comment_tokens();
 	//bool comment_token_both_sides = true;
@@ -26,8 +28,8 @@ QString Comments::get_block_comment(QString text, int length) {
 	if(N_side % 2 != 0)
 		return get_block_comment(text, length+1);
 	N_side /= 2;
-	t += c + side + m_FillingChar.repeated(N_side) + " " + text
-			+ " " + m_FillingChar.repeated(N_side) + side + c;
+	t += c + side + m_FillingChar2.repeated(N_side) + " " + text
+			+ " " + m_FillingChar2.repeated(N_side) + side + c;
 
 	t += "\n" + l1;
 
