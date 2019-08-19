@@ -49,6 +49,8 @@ private slots:
 	void on_pushButton_prettify_copy_clicked(bool);
 	void on_comboBox_prettify_filling_char_currentTextChanged(QString);
 	void on_comboBox_prettify_filling_char2_currentTextChanged(QString);
+	void on_comboBox_language_currentTextChanged(QString);
+	void on_checkBox_prettify_both_sides_toggled(bool);
 };
 
 #endif // MAINWINDOW_H

@@ -49,12 +49,14 @@ void MainWindow::write_comments(const QString &txt) {
 	ui->plainTextEdit_prettify->setPlainText(txt);
 }
 
+// Whenever there is sth to update in the prettify tab
 void MainWindow::update_comments() {
 	m_Comments->set_filling_char(ui->comboBox_prettify_filling_char->currentText());
 	m_Comments->set_filling_char2(ui->comboBox_prettify_filling_char2->currentText());
 	m_Comments->set_spacing_char(ui->lineEdit_prettify_spacing->text());
-	// Guess what the user is doing to re-load his "activity"
-	// with the new (updated) coding style
+	m_Comments->set_comment_char_both_sides(ui->checkBox_prettify_both_sides->isChecked());
+	// Guess if the user was writing a comment (bloc)
+	// to reload the comment style
 	if(!ui->lineEdit_prettify_comment_block->text().isEmpty())
 		// Simulate a change of text
 		this->on_lineEdit_prettify_comment_block_textChanged();
@@ -99,6 +101,17 @@ void MainWindow::on_comboBox_prettify_filling_char_currentTextChanged(QString t)
 void MainWindow::on_comboBox_prettify_filling_char2_currentTextChanged(QString t) {
 	update_comments();
 }
+
+void MainWindow::on_comboBox_language_currentTextChanged(QString t) {
+	CURRENT_LANGUAGE = map(t);
+	update_comments();
+}
+
+void MainWindow::on_checkBox_prettify_both_sides_toggled(bool b) {
+	update_comments();
+}
+
+
 
 
 

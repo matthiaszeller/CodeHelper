@@ -3,18 +3,21 @@
 
 #include <QStringList>
 #include <iostream>
-
+#include <QMap>
 
 enum Language { Python, CPP };
 extern Language CURRENT_LANGUAGE;
-
+QString map(Language);
+Language map(QString);
 
 const int DEFAULT_COMMENT_BLOCK_WIDTH = 40;
 const QString DEFAULT_FILLING_CHAR("=");
 const QString DEFAULT_COMMENT_STYLE("Medium");
 const bool DEFAULT_FILLING_CHARS_LINKAGE(true);
+const Language DEFAULT_LANGUAGE(Language::Python);
 
-const QStringList COMMENTS_FILLING_CHARACTERS(QStringList() << "=" << "-" << "+" << "#");
+const QStringList COMMENTS_FILLING_CHARACTERS(QStringList() << "=" << "-"
+											  << "+" << "#" << " " << "<" << ">");
 
 class TextHandler {
 public:
@@ -25,5 +28,8 @@ public:
 
 	static QString get_filling_token();
 };
+
+
+
 
 #endif // SETUP_H

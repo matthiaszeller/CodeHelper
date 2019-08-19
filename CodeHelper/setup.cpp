@@ -13,3 +13,17 @@ QString TextHandler::get_comment_tokens() {
 QString TextHandler::get_filling_token() {
 	return "-";
 }
+
+QString map(Language l) {
+	switch(l) {
+	case Python: return "Python"; break;
+	default: return "CPP"; break;
+	}
+}
+
+Language map(QString t) {
+	if(t == "Python")
+		return Python;
+	return CPP;
+}
+
