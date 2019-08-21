@@ -1,6 +1,7 @@
 #include "setup.h"
 
 Language CURRENT_LANGUAGE = Language::Python;
+bool DEBUGGING_MODE(true);
 
 QString TextHandler::get_comment_tokens() {
 	switch(CURRENT_LANGUAGE) {
@@ -26,4 +27,20 @@ Language map(QString t) {
 		return Python;
 	return CPP;
 }
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// ------------------- DEBUGGING -------------------
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+void q(const QString &t) {
+	if(!DEBUGGING_MODE)
+		return;
+	qDebug() << t;
+}
+
+
+
+
+
+
 

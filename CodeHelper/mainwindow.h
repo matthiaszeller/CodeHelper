@@ -6,6 +6,7 @@
 #include <QClipboard>
 #include "setup.h"
 #include "comments.h"
+#include "texttools.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,6 +30,8 @@ private:
 	// --------- Custom private functions
 	void write_comments(const QString &txt);
 
+
+
 	// --------- Custom private objects
 	Comments *m_Comments;
 	QClipboard *m_Clipboard;
@@ -36,8 +39,10 @@ private:
 private slots:
 	// Graphic interface signals
 
-	// TAB - Tools
-	void on_plainTextEdit_tools_textChanged();
+	// TAB - Text tools
+	void on_lineEdit_tools_regexp_textChanged(const QString &t);
+	void on_plainTextEdit_tools_textChanged(const QString &t);
+
 
 	// TAB - Prettify
 

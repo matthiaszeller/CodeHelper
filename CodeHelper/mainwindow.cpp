@@ -64,6 +64,18 @@ void MainWindow::update_comments() {
 
 // ----------------------------- PRIVATE SLOTS
 
+// TAB - Text tools
+
+void MainWindow::on_lineEdit_tools_regexp_textChanged(const QString &t) {
+	QString pattern(ui->lineEdit_tools_regexp->text());
+
+	bool b(TextTools::contains(t, pattern));
+	ui->label_regexp_outcome->setText(b ? "True" : "False");
+}
+
+
+// /////////
+
 void MainWindow::on_lineEdit_prettify_comment_block_textChanged() {
 	// Get text form the QLineEdit
 	QString txt(ui->lineEdit_prettify_comment_block->text());
