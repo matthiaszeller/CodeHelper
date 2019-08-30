@@ -6,6 +6,7 @@
 #include <QClipboard>
 #include "setup.h"
 #include "comments.h"
+#include <iostream>
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +39,10 @@ private slots:
 
 	// TAB - Tools
 	void on_plainTextEdit_tools_textChanged();
+    void on_lineEdit_tools_pattern_textChanged(QString);
+    void on_checkBox_tools_case_sensitivity_toggled(bool);
+
+    void update_tools();
 
 	// TAB - Prettify
 
@@ -50,7 +55,7 @@ private slots:
 	void on_comboBox_prettify_filling_char_currentTextChanged(QString);
 	void on_comboBox_prettify_filling_char2_currentTextChanged(QString);
 	void on_comboBox_language_currentTextChanged(QString);
-	void on_checkBox_prettify_both_sides_toggled(bool);
+    void on_checkBox_prettify_both_sides_toggled(bool);
 };
 
 #endif // MAINWINDOW_H

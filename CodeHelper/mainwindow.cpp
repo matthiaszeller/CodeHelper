@@ -8,8 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	QTimer::singleShot(80, this, SLOT(init_gui()));
-	QTimer::singleShot(120, this, SLOT(update_comments()));
+    QTimer::singleShot(80, this, SLOT(init_gui()));
+    QTimer::singleShot(120, this, SLOT(update_comments()));
+    QTimer::singleShot(120, this, SLOT(on_plainTextEdit_tools_textChanged()));
 }
 
 MainWindow::~MainWindow()
@@ -17,6 +18,10 @@ MainWindow::~MainWindow()
 	delete ui;
 	delete m_Comments;
 }
+
+// ================================================================ //
+// ---------------------- GUI INITIALIZATION ---------------------- //
+// ================================================================ //
 
 void MainWindow::init_gui() {
 	// Setup default values for widgets
@@ -45,8 +50,57 @@ void MainWindow::init_gui() {
 	ui->checkBox_prettify_link->setChecked(DEFAULT_FILLING_CHARS_LINKAGE);
 }
 
+// ================================================================ //
+// ------------------------ TAB TEXT TOOLS ------------------------ //
+// ================================================================ //
+
+void MainWindow::update_tools() {
+    QString pattern(ui->lineEdit_tools_pattern->text());
+    QString text(ui->plainTextEdit_tools->toPlainText());
+    Qt::CaseSensitivity sensitivity(ui->checkBox_tools_case_sensitivity->isChecked()
+                                    ? Qt::CaseSensitive : Qt::CaseInsensitive);
+    bool regexp(ui->checkBox_tools_regexp->isChecked());
+
+    std::cout << "\"" << text.toStdString() << "\"" << std::endl;
+    std::cout << "\"" << pattern.toStdString() << "\"" << std::endl;
+
+    if(regexp && text.contains(QRegExp(pattern, sensitivity)))
+        ui->label_tools_pattern->setText("True");
+    else if(!regexp && text.contains(pattern, sensitivity))
+        ui->label_tools_pattern->setText("True");
+    else
+        ui->label_tools_pattern->setText("False");
+}
+
+void MainWindow::on_lineEdit_tools_pattern_textChanged(QString t) {
+    update_tools();
+}
+
+void MainWindow::on_plainTextEdit_tools_textChanged() {
+    const QString &t(ui->plainTextEdit_tools->toPlainText());
+    // Update number of characters
+    ui->label_tools_size->setText(QString::number(t.size()));
+    // Update number of lines
+    int n(0);
+    if(t.isEmpty())
+        n = 0;
+    else
+        n = t.count("\n") + 1;
+    ui->label_tools_lines->setText(QString::number(n));
+    //
+    update_tools();
+}
+
+void MainWindow::on_checkBox_tools_case_sensitivity_toggled(bool) {
+    update_comments();
+}
+
+// ================================================================ //
+// ------------------------- TAB PRETTIFY ------------------------- //
+// ================================================================ //
+
 void MainWindow::write_comments(const QString &txt) {
-	ui->plainTextEdit_prettify->setPlainText(txt);
+    ui->plainTextEdit_prettify->setPlainText(txt);
 }
 
 // Whenever there is sth to update in the prettify tab
@@ -74,10 +128,6 @@ void MainWindow::on_lineEdit_prettify_comment_block_textChanged() {
 	// but the user has just pressed the delete key -> wipe out
 	if(txt.isEmpty())
 		ui->plainTextEdit_prettify->clear();
-}
-
-void MainWindow::on_plainTextEdit_tools_textChanged() {
-	ui->label_tools_size->setText(QString::number(ui->plainTextEdit_tools->toPlainText().size()));
 }
 
 void MainWindow::on_horizontalSlider_prettify_comment_block_sliderMoved(int i) {
@@ -110,8 +160,6 @@ void MainWindow::on_comboBox_language_currentTextChanged(QString t) {
 void MainWindow::on_checkBox_prettify_both_sides_toggled(bool b) {
 	update_comments();
 }
-
-
 
 
 

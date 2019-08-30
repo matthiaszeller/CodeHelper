@@ -56,7 +56,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
@@ -286,7 +286,71 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="title">
+           <string>RegExp</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="checkBox_tools_case_sensitivity">
+             <property name="text">
+              <string>Case sensitive</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Pattern :</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QCheckBox" name="checkBox_tools_regexp">
+             <property name="text">
+              <string>RegExp</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="1" colspan="3">
+            <widget class="QLineEdit" name="lineEdit_tools_pattern"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
          <widget class="QPlainTextEdit" name="plainTextEdit_tools"/>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QPushButton" name="pushButton_tools_copy">
+            <property name="text">
+             <string>Copy</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_tools_clear">
+            <property name="text">
+             <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QGroupBox" name="groupBox_2">
@@ -294,15 +358,43 @@
            <string/>
           </property>
           <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="5">
+            <widget class="QLabel" name="label_tools_lines">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Contains pattern:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
             <widget class="QLabel" name="label_3">
              <property name="text">
-              <string>Text size: </string>
+              <string>Char number:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_tools_size">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Lines:</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLabel" name="label_tools_size">
+            <widget class="QLabel" name="label_tools_pattern">
              <property name="text">
               <string/>
              </property>
