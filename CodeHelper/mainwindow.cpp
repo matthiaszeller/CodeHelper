@@ -213,6 +213,52 @@ void MainWindow::on_checkBox_prettify_capitalize_stateChanged(int) {
 	update_comments();
 }
 
+// ================================================================ //
+// ------------------------ TAB C++ HELPER ------------------------ //
+// ================================================================ //
+
+void MainWindow::update_cpp_helper() {
+	// Get the content of the directory
+	QString dir(ui->lineEdit_cpp_dir->text());
+	QStringList files(QDir(dir).entryList(QDir::NoDotAndDotDot | QDir::Files
+										  | QDir::Readable | QDir::Writable));
+	// Filter & keep only C++ files without extension
+	QStringList cpp_files;
+	for(QString file : files) {
+		if(file.right(2) == ".h")
+			cpp_files.append(file.remove(".h"));
+		else if(file.right(4) == ".cpp")
+			cpp_files.append(file.remove(".cpp"));
+	}
+	cpp_files.removeDuplicates();
+	// Check that there is at least a header file
+	for(QString file : cpp_files) {
+		if(!files.contains(file+".h"))
+			cpp_files.removeOne(file);
+	}
+	// Read the header files and look for the classes
+	for(QString file_name : cpp_files) {
+		file_name = ui->lineEdit_cpp_dir->text()+"/"+file_name+".h";
+		QFile file(file_name);
+		if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+			q("ERROR: can't open "+file_name);
+			continue;
+		}
+		QTextStream in(&file);
+		file.close();
+	}
+	// Set the list of files to the QListWidget
+	ui->listWidget_cpp_classes->clear();
+	ui->listWidget_cpp_classes->addItems(cpp_files);
+}
+
+
+void MainWindow::on_toolButton_cpp_dir_clicked() {
+	QString dir(QFileDialog::getExistingDirectory(this,
+				"Select a directory"));
+	ui->lineEdit_cpp_dir->setText(dir);
+	update_cpp_helper();
+}
 
 
 
