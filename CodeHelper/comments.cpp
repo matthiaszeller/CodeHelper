@@ -20,12 +20,15 @@ QString Comments::get_block_comment(QString text, int length) {
 	QString c2 = (m_CommentCharBothSides ? c : "");
 	//bool comment_token_both_sides = true;
 	QString side(" ");
+	if(m_Capitalize)
+		text = text.toUpper();
 
 	QString l1 = c + side + m_FillingChar.repeated(length -
 					2*side.size() - 2*c.size()) + side + c2;
 	t = l1 + "\n";
 	int N = text.size();
 	int N_side = length - 2*side.size() - 2*c.size() - 2 - N;
+	// We want the same number of characters on the left & right hand side
 	if(N_side % 2 != 0)
 		return get_block_comment(text, length+1);
 	N_side /= 2;

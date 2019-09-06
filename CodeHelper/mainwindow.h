@@ -65,6 +65,7 @@ private slots:
 	void on_comboBox_prettify_filling_char2_currentTextChanged(QString);
 	void on_comboBox_language_currentTextChanged(QString);
     void on_checkBox_prettify_both_sides_toggled(bool);
+	void on_checkBox_prettify_capitalize_stateChanged(int);
 };
 
 #endif // MAINWINDOW_H
