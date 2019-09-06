@@ -17,7 +17,12 @@ const QString DEFAULT_COMMENT_STYLE("Medium");
 const bool DEFAULT_FILLING_CHARS_LINKAGE(true);
 const Language DEFAULT_LANGUAGE(Language::Python);
 
-const QStringList COMMENTS_FILLING_CHARACTERS(QStringList() << "=" << "-" << "*"
+const bool DEFAULT_TOOLS_REGEXP(true);
+const bool DEFAULT_TOOLS_SENSITIVE(false);
+
+const QString FILENAME_SETTINGS("setup.ini");
+
+const QStringList COMMENTS_FILLING_CHARACTERS(QStringList() << "=" << "-"
 											  << "+" << "#" << " " << "<" << ">");
 
 class TextHandler {

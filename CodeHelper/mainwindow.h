@@ -7,6 +7,8 @@
 #include "setup.h"
 #include "comments.h"
 #include "texttools.h"
+#include <iostream>
+#include <QSettings>
 
 namespace Ui {
 class MainWindow;
@@ -36,13 +38,20 @@ private:
 	Comments *m_Comments;
 	QClipboard *m_Clipboard;
 
+    void save_gui();
+
 private slots:
 	// Graphic interface signals
 
 	// TAB - Text tools
 	void on_lineEdit_tools_regexp_textChanged(const QString &t);
-	void on_plainTextEdit_tools_textChanged(const QString &t);
+	void on_plainTextEdit_tools_textChanged();
+    void on_lineEdit_tools_pattern_textChanged(QString);
+    void on_checkBox_tools_case_sensitivity_toggled(bool);
+    void on_checkBox_tools_regexp_toggled(bool);
+    void on_pushButton_tools_copy_clicked();
 
+	void update_tools();
 
 	// TAB - Prettify
 
@@ -55,7 +64,7 @@ private slots:
 	void on_comboBox_prettify_filling_char_currentTextChanged(QString);
 	void on_comboBox_prettify_filling_char2_currentTextChanged(QString);
 	void on_comboBox_language_currentTextChanged(QString);
-	void on_checkBox_prettify_both_sides_toggled(bool);
+    void on_checkBox_prettify_both_sides_toggled(bool);
 };
 
 #endif // MAINWINDOW_H
