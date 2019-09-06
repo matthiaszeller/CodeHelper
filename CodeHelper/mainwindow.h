@@ -44,12 +44,12 @@ private slots:
 	// Graphic interface signals
 
 	// TAB - Text tools
-	void on_lineEdit_tools_regexp_textChanged(const QString &t);
 	void on_plainTextEdit_tools_textChanged();
     void on_lineEdit_tools_pattern_textChanged(QString);
     void on_checkBox_tools_case_sensitivity_toggled(bool);
     void on_checkBox_tools_regexp_toggled(bool);
-    void on_pushButton_tools_copy_clicked();
+	void on_pushButton_tools_copy_clicked();
+	void on_pushButton_tools_clear_clicked();
 
 	void update_tools();
 

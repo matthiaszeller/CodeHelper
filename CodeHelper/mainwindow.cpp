@@ -79,17 +79,20 @@ void MainWindow::update_tools() {
     QString text(ui->plainTextEdit_tools->toPlainText());
     Qt::CaseSensitivity sensitivity(ui->checkBox_tools_case_sensitivity->isChecked()
                                     ? Qt::CaseSensitive : Qt::CaseInsensitive);
-    bool regexp(ui->checkBox_tools_regexp->isChecked());
+	bool regexp(ui->checkBox_tools_regexp->isChecked());
 
-    //std::cout << "\"" << text.toStdString() << "\"" << std::endl;
-    //std::cout << "\"" << pattern.toStdString() << "\"" << std::endl;
-
+	bool logical_value;
     if(regexp && text.contains(QRegExp(pattern, sensitivity)))
-        ui->label_tools_pattern->setText("True");
+		logical_value = true;
     else if(!regexp && text.contains(pattern, sensitivity))
-        ui->label_tools_pattern->setText("True");
-    else
-        ui->label_tools_pattern->setText("False");
+		logical_value = true;
+	else
+		logical_value = false;
+	// Text formatting
+	QString t(QString("<b><font color=\"%1\">%2</font></b>")
+			  .arg(logical_value ? "green" : "red")
+			  .arg(logical_value ? "True" : "False"));
+	ui->label_tools_pattern->setText(t);
 }
 
 void MainWindow::on_lineEdit_tools_pattern_textChanged(QString) {
@@ -112,15 +115,27 @@ void MainWindow::on_plainTextEdit_tools_textChanged() {
 }
 
 void MainWindow::on_checkBox_tools_case_sensitivity_toggled(bool) {
-    update_comments();
+	update_tools();
 }
 
 void MainWindow::on_checkBox_tools_regexp_toggled(bool) {
-    update_comments();
+	update_tools();
 }
 
 void MainWindow::on_pushButton_tools_copy_clicked() {
     m_Clipboard->setText(ui->plainTextEdit_tools->toPlainText());
+}
+
+void MainWindow::on_pushButton_tools_clear_clicked() {
+	// This would delete the undo/redo history :
+	//		ui->plainTextEdit_tools->setPlainText("");
+	// So we find another way of doing this
+	//		https://www.qtcentre.org/threads/43268-Setting-Text-in-QPlainTextEdit-without-Clearing-Undo-Redo-History?p=197703#post197703
+	QTextDocument *doc = ui->plainTextEdit_tools->document();
+	QTextCursor curs(doc);
+	curs.select(QTextCursor::Document);
+	curs.removeSelectedText();
+	ui->plainTextEdit_tools->setFocus();
 }
 
 // ================================================================ //
@@ -147,14 +162,6 @@ void MainWindow::update_comments() {
 // ----------------------------- PRIVATE SLOTS
 
 // TAB - Text tools
-
-void MainWindow::on_lineEdit_tools_regexp_textChanged(const QString &t) {
-	QString pattern(ui->lineEdit_tools_pattern->text());
-
-	bool b(TextTools::contains(t, pattern));
-	ui->label_tools_pattern->setText(b ? "True" : "False");
-}
-
 
 // /////////
 
