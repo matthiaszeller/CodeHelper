@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    save_gui();
 	delete ui;
 	delete m_Comments;
 }
@@ -24,6 +25,16 @@ MainWindow::~MainWindow()
 // ================================================================ //
 
 void MainWindow::init_gui() {
+    // GUI PARAMETERS
+    QString prettify_filling_char(DEFAULT_FILLING_CHAR),
+            prettify_filling_char2(DEFAULT_FILLING_CHAR);
+
+    // Look if INI file exists
+    QSettings settings(FILENAME_SETTINGS, QSettings::IniFormat);
+    settings.beginGroup("tools");
+    ui->checkBox_tools_case_sensitivity->setChecked(settings.value("case_sensitive").toBool(), DEFAULT_TOOLS_SENSITIVE);
+    ui->checkBox_tools_regexp->setChecked(settings.value("regexp").toBool(), DEFAULT_TOOLS_REGEXP);
+
 	// Setup default values for widgets
 
 	// TAB - Prettify
@@ -50,6 +61,15 @@ void MainWindow::init_gui() {
 	ui->checkBox_prettify_link->setChecked(DEFAULT_FILLING_CHARS_LINKAGE);
 }
 
+void MainWindow::save_gui() {
+    QSettings settings(FILENAME_SETTINGS, QSettings::IniFormat);
+
+    settings.beginGroup("tools");
+    settings.setValue("regexp", ui->checkBox_tools_regexp->isChecked());
+    settings.setValue("case_sensitive", ui->checkBox_tools_case_sensitivity->isChecked());
+    settings.endGroup();
+}
+
 // ================================================================ //
 // ------------------------ TAB TEXT TOOLS ------------------------ //
 // ================================================================ //
@@ -61,8 +81,8 @@ void MainWindow::update_tools() {
                                     ? Qt::CaseSensitive : Qt::CaseInsensitive);
     bool regexp(ui->checkBox_tools_regexp->isChecked());
 
-    std::cout << "\"" << text.toStdString() << "\"" << std::endl;
-    std::cout << "\"" << pattern.toStdString() << "\"" << std::endl;
+    //std::cout << "\"" << text.toStdString() << "\"" << std::endl;
+    //std::cout << "\"" << pattern.toStdString() << "\"" << std::endl;
 
     if(regexp && text.contains(QRegExp(pattern, sensitivity)))
         ui->label_tools_pattern->setText("True");
@@ -72,7 +92,7 @@ void MainWindow::update_tools() {
         ui->label_tools_pattern->setText("False");
 }
 
-void MainWindow::on_lineEdit_tools_pattern_textChanged(QString t) {
+void MainWindow::on_lineEdit_tools_pattern_textChanged(QString) {
     update_tools();
 }
 
@@ -93,6 +113,14 @@ void MainWindow::on_plainTextEdit_tools_textChanged() {
 
 void MainWindow::on_checkBox_tools_case_sensitivity_toggled(bool) {
     update_comments();
+}
+
+void MainWindow::on_checkBox_tools_regexp_toggled(bool) {
+    update_comments();
+}
+
+void MainWindow::on_pushButton_tools_copy_clicked() {
+    m_Clipboard->setText(ui->plainTextEdit_tools->toPlainText());
 }
 
 // ================================================================ //
