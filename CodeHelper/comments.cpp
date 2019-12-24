@@ -12,7 +12,7 @@ Comments::Comments(CommentStyle comment_style):
 
 // ---------------
 
-QString Comments::get_block_comment(QString text, int length) {
+QString Comments::get_block_comment(QString text, int length) const {
 	// filling char 1 for upper and lower lines
 	// filling char 2 for middle line
 	QString t;

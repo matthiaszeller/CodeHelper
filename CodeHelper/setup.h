@@ -13,7 +13,7 @@ Language map(QString);
 
 const int DEFAULT_COMMENT_BLOCK_WIDTH = 40;
 const QString DEFAULT_FILLING_CHAR("=");
-const QString DEFAULT_COMMENT_STYLE("Medium");
+const int DEFAULT_COMMENT_STYLE(1);
 const bool DEFAULT_FILLING_CHARS_LINKAGE(true);
 const Language DEFAULT_LANGUAGE(Language::Python);
 
@@ -34,6 +34,8 @@ public:
 
 	static QString get_filling_token();
 };
+
+
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ------------------- DEBUGGING -------------------

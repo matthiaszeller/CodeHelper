@@ -67,6 +67,7 @@ private slots:
 	void on_comboBox_language_currentTextChanged(QString);
     void on_checkBox_prettify_both_sides_toggled(bool);
 	void on_checkBox_prettify_capitalize_stateChanged(int);
+    void on_comboBox_prettify_style_currentIndexChanged(int);
 
 	// TAB - C++ helper
 	void on_toolButton_cpp_dir_clicked();
