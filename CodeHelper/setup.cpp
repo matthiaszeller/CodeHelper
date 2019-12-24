@@ -28,6 +28,14 @@ Language map(QString t) {
 	return CPP;
 }
 
+CommentStyle map(int i) {
+    switch(i) {
+    case 0: return SingleLine; break;
+    case 1: return Default; break;
+    default: return Heavy; break;
+    }
+}
+
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ------------------- DEBUGGING -------------------
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -36,6 +44,12 @@ void q(const QString &t) {
 	if(!DEBUGGING_MODE)
 		return;
 	qDebug() << t;
+}
+
+void q(int i) {
+    if(!DEBUGGING_MODE)
+        return;
+    qDebug() << i;
 }
 
 
