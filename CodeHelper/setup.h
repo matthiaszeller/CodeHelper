@@ -6,10 +6,17 @@
 #include <QMap>
 #include <QDebug>
 
+
 enum Language { Python, CPP };
 extern Language CURRENT_LANGUAGE;
 QString map(Language);
 Language map(QString);
+
+enum CommentStyle {
+    SingleLine, Default, Heavy
+};
+
+CommentStyle map(int i);
 
 const int DEFAULT_COMMENT_BLOCK_WIDTH = 40;
 const QString DEFAULT_FILLING_CHAR("=");
@@ -36,13 +43,12 @@ public:
 };
 
 
-
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ------------------- DEBUGGING -------------------
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 void q(const QString &t);
-
+void q(int i);
 
 
 #endif // SETUP_H

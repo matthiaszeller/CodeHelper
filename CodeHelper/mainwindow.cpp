@@ -154,7 +154,8 @@ void MainWindow::update_comments() {
 	m_Comments->set_spacing_char(ui->lineEdit_prettify_spacing->text());
 	m_Comments->set_comment_char_both_sides(ui->checkBox_prettify_both_sides->isChecked());
 	m_Comments->set_capitalize(ui->checkBox_prettify_capitalize->isChecked());
-    //m_Comments
+    // We use map to convert int to CommentStyle (enum)
+    m_Comments->set_style(map(ui->comboBox_prettify_style->currentIndex()));
 
 	// Guess if the user was writing a comment (bloc)
 	// to reload the comment style
@@ -199,7 +200,7 @@ void MainWindow::on_comboBox_prettify_filling_char_currentTextChanged(QString t)
 	update_comments();
 }
 
-void MainWindow::on_comboBox_prettify_filling_char2_currentTextChanged(QString t) {
+void MainWindow::on_comboBox_prettify_filling_char2_currentTextChanged(QString) {
 	update_comments();
 }
 
@@ -208,7 +209,7 @@ void MainWindow::on_comboBox_language_currentTextChanged(QString t) {
 	update_comments();
 }
 
-void MainWindow::on_checkBox_prettify_both_sides_toggled(bool b) {
+void MainWindow::on_checkBox_prettify_both_sides_toggled(bool) {
 	update_comments();
 }
 
@@ -216,7 +217,7 @@ void MainWindow::on_checkBox_prettify_capitalize_stateChanged(int) {
 	update_comments();
 }
 
-void MainWindow::on_comboBox_prettify_style_currentIndexChanged(int i) {
+void MainWindow::on_comboBox_prettify_style_currentIndexChanged(int) {
     update_comments();
 }
 

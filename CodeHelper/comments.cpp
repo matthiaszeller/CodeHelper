@@ -26,22 +26,27 @@ QString Comments::get_block_comment(QString text, int length) const {
 	QString l1 = c + side + m_FillingChar.repeated(length -
 					2*side.size() - 2*c.size()) + side + c2;
 	t = l1 + "\n";
-	int N = text.size();
-	int N_side = length - 2*side.size() - 2*c.size() - 2 - N;
-	// We want the same number of characters on the left & right hand side
-	if(N_side % 2 != 0)
-		return get_block_comment(text, length+1);
-	N_side /= 2;
-	t += c + side + m_FillingChar2.repeated(N_side) + " " + text
-			+ " " + m_FillingChar2.repeated(N_side) + side + c2;
-
+    t += getMiddleLine(side, text, c, c2, length);
 	t += "\n" + l1;
 
 	return t;
 }
 
+QString Comments::getMiddleLine(const QString &side, const QString &text,
+                                const QString &c, const QString &c2, int length) const {
+    int N = text.size();
+    int N_side = length - 2*side.size() - 2*c.size() - 2 - N;
+    N_side /= 2;
+    QString t;
+    t += c + side + m_FillingChar2.repeated(N_side) + " " + text + " ";
+    // Compute the remaining char number to print
+    int rem(side.size() + c2.size() + N_side);
+    int residual(length - t.size() - rem);
+    if(residual > 1) N_side += 1;
+    t += m_FillingChar2.repeated(N_side) + side + c2;
 
-
+    return t;
+}
 
 
 

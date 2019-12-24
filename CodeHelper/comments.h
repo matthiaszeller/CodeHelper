@@ -4,10 +4,6 @@
 #include <QString>
 #include "setup.h"
 
-enum CommentStyle {
-    SingleLine, Default, Heavy
-};
-
 //! Generate comment blocks with given style
 class Comments
 {
@@ -26,7 +22,7 @@ public:
     //! Whether to capitalize the text
 	void set_capitalize(bool b) { m_Capitalize = b; }
     //! Set the coding style
-    void set_style(CommentStyle style);
+    void set_style(CommentStyle style) { m_Style = style; }
 
     //! Generate the comment block as a QString
     QString get_block_comment(QString text, int length = 90) const;
@@ -39,6 +35,9 @@ private:
 	QString m_SpacingChar;
 	bool m_CommentCharBothSides;
 	bool m_Capitalize;
+
+    //! Generate line containing the text
+    QString getMiddleLine(const QString &side, const QString &text, const QString &c, const QString &c2, int length) const;
 };
 
 
