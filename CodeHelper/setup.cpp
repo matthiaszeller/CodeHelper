@@ -43,7 +43,7 @@ CommentStyle map(int i) {
 void q(const QString &t) {
 	if(!DEBUGGING_MODE)
 		return;
-	qDebug() << t;
+    qDebug() << t << "\n";
 }
 
 void q(int i) {

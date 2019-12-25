@@ -34,11 +34,14 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
     int idx2(t.indexOf(commentChar, idx));
     int idxOfNextLine(t.indexOf("\n", idx));
     QString textLine;
+    q(idx2);
     if(idx2 == -1) { // Single line
         p.style = CommentStyle::SingleLine;
         textLine = t.mid(idx, idxOfNextLine);
     // TODO : add if clause for CommentStyle::Heavy
     } else {
+        q("else");
+        q(idxOfNextLine);
         // The second line does not follow the first line with good format
         if(idx2 != idxOfNextLine + 2) // + 2 for `\n`
             ok = false;
@@ -47,6 +50,10 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
         int idxOfThirdLine(t.indexOf("\n", idxOfNextLine));
         textLine = t.mid(idxOfNextLine + 2, idxOfThirdLine); // +2 for `\n`
     }
+    // CHECKPOINT: avoid errors when calling QString::at
+    q(ok);
+    std::cout << "before checkpoint\n";
+    if(!ok) return p;
     // 3. Length
     // idxOfNextLine - idx + 1 represents the length of the first commented line
     p.length = idxOfNextLine - idx + 1;
@@ -72,7 +79,6 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
     else
         p.commentCharBoth = true;
 
-    q(ok);
     // 7. Capitalize
     // Extract the text
     int idxTextStart(textLine.indexOf(p.fillingChar2 + " "));
@@ -85,7 +91,7 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
 
     q(firstLine.at(commentChar.size() + 1));
 
-
+    std::cout << "almost at end\n";
     q(commentChar);
     q(idx);
     q(idxOfNextLine);

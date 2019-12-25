@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_Comments(new Comments()), m_Clipboard(QApplication::clipboard())
 {
     ui->setupUi(this);
-    q(true);
 
     QTimer::singleShot(80, this, SLOT(init_gui()));
     QTimer::singleShot(120, this, SLOT(update_comments()));
