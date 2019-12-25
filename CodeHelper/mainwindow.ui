@@ -56,7 +56,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -504,7 +504,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="label_10">
              <property name="text">
-              <string>Contains pattern:</string>
+              <string>Index of pattern: </string>
              </property>
             </widget>
            </item>

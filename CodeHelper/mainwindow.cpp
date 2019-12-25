@@ -86,17 +86,15 @@ void MainWindow::update_tools() {
                                     ? Qt::CaseSensitive : Qt::CaseInsensitive);
 	bool regexp(ui->checkBox_tools_regexp->isChecked());
 
-	bool logical_value;
-    if(regexp && text.contains(QRegExp(pattern, sensitivity)))
-		logical_value = true;
-    else if(!regexp && text.contains(pattern, sensitivity))
-		logical_value = true;
-	else
-		logical_value = false;
+    int idx;
+    if(regexp)
+        idx = text.indexOf(QRegExp(pattern, sensitivity));
+    else
+        idx = text.indexOf(pattern, sensitivity);
 	// Text formatting
-	QString t(QString("<b><font color=\"%1\">%2</font></b>")
-			  .arg(logical_value ? "green" : "red")
-			  .arg(logical_value ? "True" : "False"));
+    QString t(QString("<b><font color=\"%1\">%2</font></b>")
+              .arg((idx != -1) ? "green" : "red")
+              .arg(idx));
 	ui->label_tools_pattern->setText(t);
 }
 
