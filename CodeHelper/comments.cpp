@@ -10,8 +10,53 @@ Comments::Comments(CommentStyle comment_style):
 
 }
 
+void Comments::set_params(const CommentParams &params) {
+    this->set_capitalize(params.capitalize);
+    this->set_filling_char(params.fillingChar);
+    this->set_filling_char2(params.fillingChar2);
+    this->set_comment_char_both_sides(params.commentCharBoth);
+    this->set_style(params.style);
+}
+
+// WARNING: if get_block_comment changes, this must change
+CommentParams Comments::process_params(const QString &t, bool &ok) {
+    // Manage the report of success/failure
+    ok = true;
+    // Initialize data structure of parameters
+    CommentParams p;
+    // Here we need to get the settings for the different languages
+    QString commentChar(LANGUAGE_COMMENT_STR[CURRENT_LANGUAGE]);
+    // --- PROCESS
+    // 1. Detect if comment at all, look at comment string (`//`, `#`, ...)
+    int idx(t.indexOf(commentChar));
+    if(idx == -1) ok = false;
+    // 2. Comment style: detect number of comment lines
+    int idx2(t.indexOf(commentChar, idx));
+    if(idx2 == -1) // Single line
+        p.style = CommentStyle::SingleLine;
+    // TODO : add if clause for CommentStyle::Heavy
+    else
+        p.style = CommentStyle::Default;
+    // 3. Length
+    int idxOfNextLine(t.indexOf("\n", idx));
+    // idxOfNextLine - idx + 1 represents the length of the first commented line
+    p.
+    q(commentChar);
+    q(idx);
+    q(idxOfNextLine);
+    q(t.mid(idx, idxOfNextLine - idx));
+    q(idxOfNextLine - idx);
+
+    return p;
+}
+
+// ==================================
+// =============== ff ================
+// ==================================
 // ---------------
 
+
+// WARNING: if the format here changes, the function process_params must change !!!
 QString Comments::get_block_comment(QString text, int length) const {
 	// filling char 1 for upper and lower lines
 	// filling char 2 for middle line

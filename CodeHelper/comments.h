@@ -4,6 +4,24 @@
 #include <QString>
 #include "setup.h"
 
+// ======================================================
+// -------------------- PARAM STRUCT ---------------------
+// ======================================================
+
+//! Represents all parameters
+struct CommentParams {
+    QString fillingChar;
+    QString fillingChar2;
+    QString spacingChar;
+    bool commentCharBoth;
+    bool capitalize;
+    CommentStyle style;
+};
+
+// ======================================================
+// ------------------- CLASS COMMENT --------------------
+// ======================================================
+
 //! Generate comment blocks with given style
 class Comments
 {
@@ -11,6 +29,10 @@ public:
 	Comments(CommentStyle comment_style);
 	Comments();
 
+    // ========= SET PARAMETERS ==========
+
+    //! Change settings all at once with a struct
+    void set_params(const CommentParams &params);
     //! Default style: filling character of top and bottom lines
 	void set_filling_char(QString t)  { m_FillingChar = t; }
     //! Default style: filling character if the middle line (surrounding the text)
@@ -24,17 +46,29 @@ public:
     //! Set the coding style
     void set_style(CommentStyle style) { m_Style = style; }
 
+    // ============ GENERATE =============
+
     //! Generate the comment block as a QString
     QString get_block_comment(QString text, int length = 90) const;
 
-private:
-	CommentStyle m_Style;
+    // ============= STATIC ==============
 
+    //! Process text and return the corresponding CommentParams
+    //! @param ok : assign value depending on validity of the content of \param t
+    static CommentParams process_params(const QString &t, bool &ok);
+
+private:
+
+    // =========== ATTRIBUTES ============
+
+	CommentStyle m_Style;
 	QString m_FillingChar;
 	QString m_FillingChar2;
 	QString m_SpacingChar;
 	bool m_CommentCharBothSides;
 	bool m_Capitalize;
+
+    // ============ GENERATE =============
 
     //! Generate line containing the text
     QString getMiddleLine(const QString &side, const QString &text, const QString &c, const QString &c2, int length) const;

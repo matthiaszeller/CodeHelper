@@ -356,7 +356,14 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QPlainTextEdit" name="plainTextEdit_prettify"/>
+              <widget class="QPlainTextEdit" name="plainTextEdit_prettify">
+               <property name="plainText">
+                <string/>
+               </property>
+               <property name="placeholderText">
+                <string/>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -366,6 +373,13 @@
               <widget class="QPushButton" name="pushButton_prettify_copy">
                <property name="text">
                 <string>Copy</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_prettify_load">
+               <property name="text">
+                <string>Load from clipboard</string>
                </property>
               </widget>
              </item>

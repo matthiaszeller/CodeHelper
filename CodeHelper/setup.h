@@ -11,12 +11,14 @@ enum Language { Python, CPP };
 extern Language CURRENT_LANGUAGE;
 QString map(Language);
 Language map(QString);
+//! Maps the enum Language
+const QStringList LANGUAGE_COMMENT_STR(QStringList() << "#" << "//");
 
 enum CommentStyle {
     SingleLine, Default, Heavy
 };
 
-CommentStyle map(int i);
+CommentStyle map(int i); // TODO: change this, bad idea (used for language)
 
 const int DEFAULT_COMMENT_BLOCK_WIDTH = 40;
 const QString DEFAULT_FILLING_CHAR("=");

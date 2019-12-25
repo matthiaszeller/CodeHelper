@@ -226,6 +226,14 @@ void MainWindow::on_comboBox_prettify_style_currentIndexChanged(int) {
     update_comments();
 }
 
+void MainWindow::on_pushButton_prettify_load_clicked(bool) {
+    // Load configuration of comments from the content of the clipboard
+    QString clipContent = m_Clipboard->text();
+    bool ok;
+    CommentParams params(Comments::process_params(clipContent, ok));
+    m_Comments->set_params(params);
+}
+
 // ================================================================ //
 // ------------------------ TAB C++ HELPER ------------------------ //
 // ================================================================ //
