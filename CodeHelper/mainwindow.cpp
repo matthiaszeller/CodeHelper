@@ -6,7 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow),
 	m_Comments(new Comments()), m_Clipboard(QApplication::clipboard())
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
+    q(true);
 
     QTimer::singleShot(80, this, SLOT(init_gui()));
     QTimer::singleShot(120, this, SLOT(update_comments()));
@@ -154,6 +155,7 @@ void MainWindow::write_comments(const QString &txt) {
 // Whenever there is sth to update in the prettify tab
 void MainWindow::update_comments() {
     // Coding style, filling characters
+    m_Comments->set_length(ui->horizontalSlider_prettify_comment_block->value());
 	m_Comments->set_filling_char(ui->comboBox_prettify_filling_char->currentText());
 	m_Comments->set_filling_char2(ui->comboBox_prettify_filling_char2->currentText());
 	m_Comments->set_spacing_char(ui->lineEdit_prettify_spacing->text());
@@ -179,8 +181,8 @@ void MainWindow::on_lineEdit_prettify_comment_block_textChanged() {
 	// Get text form the QLineEdit
 	QString txt(ui->lineEdit_prettify_comment_block->text());
 	// Write in the QPlainTextEdit the block comment
-	write_comments(m_Comments->get_block_comment(txt,
-					ui->horizontalSlider_prettify_comment_block->value()));
+    write_comments(m_Comments->get_block_comment(txt));
+
 	// If no more text is present in the LineEdit,
 	// but the user has just pressed the delete key -> wipe out
 	if(txt.isEmpty())
@@ -231,6 +233,8 @@ void MainWindow::on_pushButton_prettify_load_clicked(bool) {
     QString clipContent = m_Clipboard->text();
     bool ok;
     CommentParams params(Comments::process_params(clipContent, ok));
+    if(!ok)
+        return;
     m_Comments->set_params(params);
 }
 

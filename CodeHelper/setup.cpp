@@ -52,8 +52,11 @@ void q(int i) {
     qDebug() << i;
 }
 
-
-
+void q(bool b) {
+    if(!DEBUGGING_MODE)
+        return;
+    qDebug() << b;
+}
 
 
 

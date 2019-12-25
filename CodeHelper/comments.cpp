@@ -32,15 +32,60 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
     if(idx == -1) ok = false;
     // 2. Comment style: detect number of comment lines
     int idx2(t.indexOf(commentChar, idx));
-    if(idx2 == -1) // Single line
-        p.style = CommentStyle::SingleLine;
-    // TODO : add if clause for CommentStyle::Heavy
-    else
-        p.style = CommentStyle::Default;
-    // 3. Length
     int idxOfNextLine(t.indexOf("\n", idx));
+    QString textLine;
+    if(idx2 == -1) { // Single line
+        p.style = CommentStyle::SingleLine;
+        textLine = t.mid(idx, idxOfNextLine);
+    // TODO : add if clause for CommentStyle::Heavy
+    } else {
+        // The second line does not follow the first line with good format
+        if(idx2 != idxOfNextLine + 2) // + 2 for `\n`
+            ok = false;
+        p.style = CommentStyle::Default;
+        // Load the second line
+        int idxOfThirdLine(t.indexOf("\n", idxOfNextLine));
+        textLine = t.mid(idxOfNextLine + 2, idxOfThirdLine); // +2 for `\n`
+    }
+    // 3. Length
     // idxOfNextLine - idx + 1 represents the length of the first commented line
-    p.
+    p.length = idxOfNextLine - idx + 1;
+    // 4. Filling char 1 : at position commentChar.size + 1 (space)
+    QString firstLine(t.mid(idx, idxOfNextLine - idx));
+    QString fillingChar(firstLine.at(commentChar.size() + 1));
+    if(!COMMENTS_FILLING_CHARACTERS.contains(fillingChar))
+        ok = false;
+    p.fillingChar = fillingChar;
+    // 5. Filling char 2
+    // If style is SingleLine, set the same as filling char 1
+    if(p.style == CommentStyle::SingleLine)
+        p.fillingChar2 = p.fillingChar;
+    // TODO: manage heavy of CommentStyle::Heavy
+    else {  // CommentStyle::Default
+        QString fillingChar2(textLine.at(commentChar.size() + 1)); // +1 for space
+        p.fillingChar2 = fillingChar2;
+    }
+    // 6. Char on both sides
+    // Look at the commentChar in a substring of textLine
+    if(textLine.mid(commentChar.size()).indexOf(commentChar) == -1)
+        p.commentCharBoth = false;
+    else
+        p.commentCharBoth = true;
+
+    q(ok);
+    // 7. Capitalize
+    // Extract the text
+    int idxTextStart(textLine.indexOf(p.fillingChar2 + " "));
+    int idxTextEnd(textLine.indexOf(" " + p.fillingChar2, idxTextStart));
+    if(idxTextStart == -1 || idxTextEnd == -1)
+        ok = false;
+    QString text(textLine.mid(idxTextStart, idxTextStart+1));
+    q(text);
+    q(ok);
+
+    q(firstLine.at(commentChar.size() + 1));
+
+
     q(commentChar);
     q(idx);
     q(idxOfNextLine);
@@ -57,7 +102,7 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
 
 
 // WARNING: if the format here changes, the function process_params must change !!!
-QString Comments::get_block_comment(QString text, int length) const {
+QString Comments::get_block_comment(QString text) const {
 	// filling char 1 for upper and lower lines
 	// filling char 2 for middle line
 	QString t;
@@ -68,17 +113,17 @@ QString Comments::get_block_comment(QString text, int length) const {
 	if(m_Capitalize)
 		text = text.toUpper();
 
-	QString l1 = c + side + m_FillingChar.repeated(length -
+    QString l1 = c + side + m_FillingChar.repeated(m_Length -
 					2*side.size() - 2*c.size()) + side + c2;
     if(m_Style == Default) {
         t = l1 + "\n";
-        t += getMiddleLine(side, text, c, c2, length);
+        t += getMiddleLine(side, text, c, c2, m_Length);
         t += "\n" + l1;
     } else if(m_Style == SingleLine) {
-        t += getMiddleLine(side, text, c, c2, length);
+        t += getMiddleLine(side, text, c, c2, m_Length);
     } else {
         t = c + "\n" + l1 + "\n";
-        t += getMiddleLine(side, text, c, c2, length);
+        t += getMiddleLine(side, text, c, c2, m_Length);
         t += "\n" + l1 + "\n" + c;
     }
 

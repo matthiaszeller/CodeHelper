@@ -51,6 +51,7 @@ public:
 
 void q(const QString &t);
 void q(int i);
+void q(bool b);
 
 
 #endif // SETUP_H

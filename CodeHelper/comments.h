@@ -16,6 +16,7 @@ struct CommentParams {
     bool commentCharBoth;
     bool capitalize;
     CommentStyle style;
+    int length;
 };
 
 // ======================================================
@@ -45,11 +46,13 @@ public:
 	void set_capitalize(bool b) { m_Capitalize = b; }
     //! Set the coding style
     void set_style(CommentStyle style) { m_Style = style; }
+    //! Set the length of the line, i.e. number of columns
+    void set_length(int len) { m_Length = len; }
 
     // ============ GENERATE =============
 
     //! Generate the comment block as a QString
-    QString get_block_comment(QString text, int length = 90) const;
+    QString get_block_comment(QString text) const;
 
     // ============= STATIC ==============
 
@@ -67,6 +70,7 @@ private:
 	QString m_SpacingChar;
 	bool m_CommentCharBothSides;
 	bool m_Capitalize;
+    int m_Length;
 
     // ============ GENERATE =============
 
