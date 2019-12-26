@@ -232,6 +232,7 @@ void MainWindow::on_pushButton_prettify_load_clicked(bool) {
     CommentParams params(Comments::process_params(clipContent, ok));
     if(!ok) {
         std::cerr << "The processing of params failed !" << std::endl;
+        return;
     }
     //m_Comments->set_params(params);
     update_comments_gui(params);
@@ -244,6 +245,8 @@ void MainWindow::update_comments_gui(const CommentParams &p) {
     ui->comboBox_prettify_filling_char2->setCurrentText(p.fillingChar2);
     ui->checkBox_prettify_both_sides->setChecked(p.commentCharBoth);
     ui->horizontalSlider_prettify_comment_block->setValue(p.length);
+
+    update_comments();
 }
 
 // ================================================================ //
