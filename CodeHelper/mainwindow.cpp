@@ -230,9 +230,20 @@ void MainWindow::on_pushButton_prettify_load_clicked(bool) {
     QString clipContent = m_Clipboard->text();
     bool ok;
     CommentParams params(Comments::process_params(clipContent, ok));
-    if(!ok)
-        return;
-    m_Comments->set_params(params);
+    if(!ok) {
+        std::cerr << "The processing of params failed !" << std::endl;
+    }
+    //m_Comments->set_params(params);
+    update_comments_gui(params);
+}
+
+void MainWindow::update_comments_gui(const CommentParams &p) {
+    ui->checkBox_prettify_capitalize->setChecked(p.capitalize);
+    ui->comboBox_prettify_style->setCurrentIndex(p.style);
+    ui->comboBox_prettify_filling_char->setCurrentText(p.fillingChar);
+    ui->comboBox_prettify_filling_char2->setCurrentText(p.fillingChar2);
+    ui->checkBox_prettify_both_sides->setChecked(p.commentCharBoth);
+    ui->horizontalSlider_prettify_comment_block->setValue(p.length);
 }
 
 // ================================================================ //

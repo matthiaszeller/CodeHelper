@@ -24,9 +24,8 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
     QStringList args(QStringList() << t << LANGUAGE_COMMENT_STR);
     QString scriptOutput(ScriptManager::exec_python(
                              "comment_params.py", args));
-    std::cout << "OUTPUT:\n" << scriptOutput.toStdString()
-              << "---" << std::endl;
-
+    //std::cout << "OUTPUT:\n" << scriptOutput.toStdString()
+    //          << "---" << std::endl;
 
     CommentParams p;
     // We must now process the output of the python script
@@ -39,8 +38,18 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
     }
     // Here we have the correct number of parameters,
     // we simply load them with the order described in the script
+    p.fillingChar = params[0];
+    p.fillingChar2 = params[1];
+    p.spacingChar = params[2]; // TODO : not implemented ...
+    p.commentCharBoth = true ? params[3] == "True" : false;
+    p.capitalize = true ? params[4] == "True" : false;
+    switch(params[5].toInt()) { // TODO : implement heavy style
+        case 1: p.style = CommentStyle::SingleLine; break;
+        default: p.style = CommentStyle::Default; break;
+    }
+    p.length = params[6].toInt();
 
-    ok = false;
+    ok = true;
     return p;
 }
 

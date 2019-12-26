@@ -59,6 +59,7 @@ private slots:
 
 	// Update comments
 	void update_comments();
+    void update_comments_gui(const CommentParams &p);
 
 	void on_lineEdit_prettify_comment_block_textChanged();
 	void on_horizontalSlider_prettify_comment_block_sliderMoved(int);
