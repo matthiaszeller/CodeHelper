@@ -20,93 +20,29 @@ void Comments::set_params(const CommentParams &params) {
 
 // WARNING: if get_block_comment changes, this must change
 CommentParams Comments::process_params(const QString &t, bool &ok) {
-    // Manage the report of success/failure
-    ok = true;
-    // Initialize data structure of parameters
+
+    QStringList args(QStringList() << t << LANGUAGE_COMMENT_STR);
+    QString scriptOutput(ScriptManager::exec_python(
+                             "comment_params.py", args));
+    std::cout << "OUTPUT:\n" << scriptOutput.toStdString()
+              << "---" << std::endl;
+
+
     CommentParams p;
-    // Here we need to get the settings for the different languages
-    QString commentChar(LANGUAGE_COMMENT_STR[CURRENT_LANGUAGE]);
-    // --- PROCESS
-    // 1. Detect if comment at all, look at comment string (`//`, `#`, ...)
-    int idx(t.indexOf(commentChar));
-    if(idx == -1) ok = false;
-    // 2. Comment style: detect number of comment lines
-    int idx2(t.indexOf(commentChar, idx + commentChar.size()));
-    int idxOfNextLine(t.indexOf("\n", idx + commentChar.size()));
-    QString textLine;
-    q(idx2);
-    if(idx2 == -1) { // Single line
-        p.style = CommentStyle::SingleLine;
-        textLine = t.mid(idx, idxOfNextLine);
-    // TODO : add if clause for CommentStyle::Heavy
-    } else {
-        q("else");
-        std::cout << "else" << std::endl;
-        q(idxOfNextLine);
-        // The second line does not follow the first line with good format
-        //if(idx2 != idxOfNextLine + 2) // + 2 for `\n`
-        //    ok = false;
-        p.style = CommentStyle::Default;
-        // Load the second line
-        int idxOfThirdLine(t.indexOf("\n", idxOfNextLine));
-        textLine = t.mid(idxOfNextLine + 2, idxOfThirdLine); // +2 for `\n`
-    }
-    // CHECKPOINT: avoid errors when calling QString::at
-    q(ok);
-    std::cout << "before checkpoint\n";
-    if(!ok) return p;
-    // 3. Length
-    // idxOfNextLine - idx + 1 represents the length of the first commented line
-    p.length = idxOfNextLine - idx + 1;
-    // 4. Filling char 1 : at position commentChar.size + 1 (space)
-    QString firstLine(t.mid(idx, idxOfNextLine - idx));
-    QString fillingChar(firstLine.at(commentChar.size() + 1));
-    if(!COMMENTS_FILLING_CHARACTERS.contains(fillingChar))
+    // We must now process the output of the python script
+    // The convention is to use a given order for the parameters
+    // See the python script for more information
+    QStringList params(scriptOutput.split(","));
+    if(params.size() != 7) {
         ok = false;
-    p.fillingChar = fillingChar;
-    // 5. Filling char 2
-    // If style is SingleLine, set the same as filling char 1
-    if(p.style == CommentStyle::SingleLine)
-        p.fillingChar2 = p.fillingChar;
-    // TODO: manage heavy of CommentStyle::Heavy
-    else {  // CommentStyle::Default
-        QString fillingChar2(textLine.at(commentChar.size() + 1)); // +1 for space
-        p.fillingChar2 = fillingChar2;
+        return p;
     }
-    // 6. Char on both sides
-    // Look at the commentChar in a substring of textLine
-    if(textLine.mid(commentChar.size()).indexOf(commentChar) == -1)
-        p.commentCharBoth = false;
-    else
-        p.commentCharBoth = true;
+    // Here we have the correct number of parameters,
+    // we simply load them with the order described in the script
 
-    // 7. Capitalize
-    // Extract the text
-    int idxTextStart(textLine.indexOf(p.fillingChar2 + " "));
-    int idxTextEnd(textLine.indexOf(" " + p.fillingChar2, idxTextStart));
-    if(idxTextStart == -1 || idxTextEnd == -1)
-        ok = false;
-    QString text(textLine.mid(idxTextStart, idxTextStart+1));
-    q(text);
-    q(ok);
-
-    q(firstLine.at(commentChar.size() + 1));
-
-    std::cout << "almost at end\n";
-    q(commentChar);
-    q(idx);
-    q(idxOfNextLine);
-    q(t.mid(idx, idxOfNextLine - idx));
-    q(idxOfNextLine - idx);
-
+    ok = false;
     return p;
 }
-
-// ==================================
-// =============== ff ================
-// ==================================
-// ---------------
-
 
 // WARNING: if the format here changes, the function process_params must change !!!
 QString Comments::get_block_comment(QString text) const {
@@ -154,9 +90,4 @@ QString Comments::getMiddleLine(const QString &side, const QString &text,
 
     return t;
 }
-
-
-
-
-
 

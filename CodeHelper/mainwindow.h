@@ -10,6 +10,7 @@
 #include <iostream>
 #include <QSettings>
 #include <QFileDialog>
+#include "scriptmanager.h"
 
 namespace Ui {
 class MainWindow;

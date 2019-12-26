@@ -24,6 +24,7 @@ QString ScriptManager::exec_python(const QString &script_name, const QStringList
     QStringList progArgs(QStringList() << scriptPath << args);
     p.start(progName, progArgs);
     p.waitForFinished();
+    std::cout << "Running " << scriptPath.toStdString() << std::endl;
     // Return the output
     return p.readAllStandardOutput();
 }

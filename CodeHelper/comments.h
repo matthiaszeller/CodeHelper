@@ -3,6 +3,7 @@
 
 #include <QString>
 #include "setup.h"
+#include "scriptmanager.h"
 
 // ======================================================
 // -------------------- PARAM STRUCT ---------------------
