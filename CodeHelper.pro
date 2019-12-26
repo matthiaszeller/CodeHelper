@@ -25,7 +25,8 @@ HEADERS += CodeHelper/comments.h \
            CodeHelper/setup.h \
     CodeHelper/docstringmanager.h \
     CodeHelper/texttools.h \
-    CodeHelper/classmanager.h
+    CodeHelper/classmanager.h \
+    CodeHelper/scriptmanager.h
            debug/ui_mainwindow.h
 FORMS += CodeHelper/mainwindow.ui
 SOURCES += CodeHelper/comments.cpp \
@@ -34,4 +35,5 @@ SOURCES += CodeHelper/comments.cpp \
            CodeHelper/setup.cpp \
     CodeHelper/docstringmanager.cpp \
     CodeHelper/texttools.cpp \
-    CodeHelper/classmanager.cpp
+    CodeHelper/classmanager.cpp \
+    CodeHelper/scriptmanager.cpp

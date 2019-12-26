@@ -31,8 +31,8 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
     int idx(t.indexOf(commentChar));
     if(idx == -1) ok = false;
     // 2. Comment style: detect number of comment lines
-    int idx2(t.indexOf(commentChar, idx));
-    int idxOfNextLine(t.indexOf("\n", idx));
+    int idx2(t.indexOf(commentChar, idx + commentChar.size()));
+    int idxOfNextLine(t.indexOf("\n", idx + commentChar.size()));
     QString textLine;
     q(idx2);
     if(idx2 == -1) { // Single line
@@ -41,10 +41,11 @@ CommentParams Comments::process_params(const QString &t, bool &ok) {
     // TODO : add if clause for CommentStyle::Heavy
     } else {
         q("else");
+        std::cout << "else" << std::endl;
         q(idxOfNextLine);
         // The second line does not follow the first line with good format
-        if(idx2 != idxOfNextLine + 2) // + 2 for `\n`
-            ok = false;
+        //if(idx2 != idxOfNextLine + 2) // + 2 for `\n`
+        //    ok = false;
         p.style = CommentStyle::Default;
         // Load the second line
         int idxOfThirdLine(t.indexOf("\n", idxOfNextLine));
