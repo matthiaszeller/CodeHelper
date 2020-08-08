@@ -10,6 +10,7 @@
 #include <iostream>
 #include <QSettings>
 #include <QFileDialog>
+#include "scriptmanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -66,6 +67,7 @@ private slots:
 
 	// Update comments
 	void update_comments();
+    void update_comments_gui(const CommentParams &p);
 
 	void on_lineEdit_prettify_comment_block_textChanged();
 	void on_horizontalSlider_prettify_comment_block_sliderMoved(int);
@@ -75,6 +77,8 @@ private slots:
 	void on_comboBox_language_currentTextChanged(QString);
     void on_checkBox_prettify_both_sides_toggled(bool);
 	void on_checkBox_prettify_capitalize_stateChanged(int);
+    void on_comboBox_prettify_style_currentIndexChanged(int);
+    void on_pushButton_prettify_load_clicked(bool);
 
 	// TAB - C++ helper
 	void on_toolButton_cpp_dir_clicked();

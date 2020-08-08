@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow),
 	m_Comments(new Comments()), m_Clipboard(QApplication::clipboard())
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
     QTimer::singleShot(80, this, SLOT(init_gui()));
     QTimer::singleShot(120, this, SLOT(update_comments()));
@@ -45,7 +45,12 @@ void MainWindow::init_gui() {
 	// /////// TAB - Prettify
 
 	// Comment style
+<<<<<<< HEAD
 	ui->comboBox_prettify_style->setCurrentText(DEFAULT_COMMENT_STYLE);
+=======
+    ui->comboBox_prettify_style->setCurrentIndex(DEFAULT_COMMENT_STYLE);
+	// Filling characters
+>>>>>>> master
 	// QPlainTextEdit paragraph symbols
 	QTextOption option;
 	option.setFlags(QTextOption::ShowLineAndParagraphSeparators);
@@ -96,17 +101,15 @@ void MainWindow::update_tools() {
                                     ? Qt::CaseSensitive : Qt::CaseInsensitive);
 	bool regexp(ui->checkBox_tools_regexp->isChecked());
 
-	bool logical_value;
-    if(regexp && text.contains(QRegExp(pattern, sensitivity)))
-		logical_value = true;
-    else if(!regexp && text.contains(pattern, sensitivity))
-		logical_value = true;
-	else
-		logical_value = false;
+    int idx;
+    if(regexp)
+        idx = text.indexOf(QRegExp(pattern, sensitivity));
+    else
+        idx = text.indexOf(pattern, sensitivity);
 	// Text formatting
-	QString t(QString("<b><font color=\"%1\">%2</font></b>")
-			  .arg(logical_value ? "green" : "red")
-			  .arg(logical_value ? "True" : "False"));
+    QString t(QString("<b><font color=\"%1\">%2</font></b>")
+              .arg((idx != -1) ? "green" : "red")
+              .arg(idx));
 	ui->label_tools_pattern->setText(t);
 }
 
@@ -163,11 +166,16 @@ void MainWindow::write_comments(const QString &txt) {
 
 // Whenever there is sth to update in the prettify tab
 void MainWindow::update_comments() {
+    // Coding style, filling characters
+    m_Comments->set_length(ui->horizontalSlider_prettify_comment_block->value());
 	m_Comments->set_filling_char(ui->comboBox_prettify_filling_char->currentText());
 	m_Comments->set_filling_char2(ui->comboBox_prettify_filling_char2->currentText());
 	m_Comments->set_spacing_char(ui->lineEdit_prettify_spacing->text());
 	m_Comments->set_comment_char_both_sides(ui->checkBox_prettify_both_sides->isChecked());
 	m_Comments->set_capitalize(ui->checkBox_prettify_capitalize->isChecked());
+    // We use map to convert int to CommentStyle (enum)
+    m_Comments->set_style(map(ui->comboBox_prettify_style->currentIndex()));
+
 	// Guess if the user was writing a comment (bloc)
 	// to reload the comment style
 	if(!ui->lineEdit_prettify_comment_block->text().isEmpty())
@@ -185,8 +193,8 @@ void MainWindow::on_lineEdit_prettify_comment_block_textChanged() {
 	// Get text form the QLineEdit
 	QString txt(ui->lineEdit_prettify_comment_block->text());
 	// Write in the QPlainTextEdit the block comment
-	write_comments(m_Comments->get_block_comment(txt,
-					ui->horizontalSlider_prettify_comment_block->value()));
+    write_comments(m_Comments->get_block_comment(txt));
+
 	// If no more text is present in the LineEdit,
 	// but the user has just pressed the delete key -> wipe out
 	if(txt.isEmpty())
@@ -211,7 +219,7 @@ void MainWindow::on_comboBox_prettify_filling_char_currentTextChanged(QString t)
 	update_comments();
 }
 
-void MainWindow::on_comboBox_prettify_filling_char2_currentTextChanged(QString t) {
+void MainWindow::on_comboBox_prettify_filling_char2_currentTextChanged(QString) {
 	update_comments();
 }
 
@@ -220,12 +228,40 @@ void MainWindow::on_comboBox_language_currentTextChanged(QString t) {
 	update_comments();
 }
 
-void MainWindow::on_checkBox_prettify_both_sides_toggled(bool b) {
+void MainWindow::on_checkBox_prettify_both_sides_toggled(bool) {
 	update_comments();
 }
 
 void MainWindow::on_checkBox_prettify_capitalize_stateChanged(int) {
 	update_comments();
+}
+
+void MainWindow::on_comboBox_prettify_style_currentIndexChanged(int) {
+    update_comments();
+}
+
+void MainWindow::on_pushButton_prettify_load_clicked(bool) {
+    // Load configuration of comments from the content of the clipboard
+    QString clipContent = m_Clipboard->text();
+    bool ok;
+    CommentParams params(Comments::process_params(clipContent, ok));
+    if(!ok) {
+        std::cerr << "The processing of params failed !" << std::endl;
+        return;
+    }
+    //m_Comments->set_params(params);
+    update_comments_gui(params);
+}
+
+void MainWindow::update_comments_gui(const CommentParams &p) {
+    ui->checkBox_prettify_capitalize->setChecked(p.capitalize);
+    ui->comboBox_prettify_style->setCurrentIndex(p.style);
+    ui->comboBox_prettify_filling_char->setCurrentText(p.fillingChar);
+    ui->comboBox_prettify_filling_char2->setCurrentText(p.fillingChar2);
+    ui->checkBox_prettify_both_sides->setChecked(p.commentCharBoth);
+    ui->horizontalSlider_prettify_comment_block->setValue(p.length);
+
+    update_comments();
 }
 
 // ================================================================ //

@@ -28,6 +28,14 @@ Language map(QString t) {
 	return CPP;
 }
 
+CommentStyle map(int i) {
+    switch(i) {
+    case 0: return SingleLine; break;
+    case 1: return Default; break;
+    default: return Heavy; break;
+    }
+}
+
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ------------------- DEBUGGING -------------------
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -35,16 +43,21 @@ Language map(QString t) {
 void q(const QString &t) {
 	if(!DEBUGGING_MODE)
 		return;
-	qDebug() << t;
+    qDebug() << t;
+    qDebug();
 }
 
 void q(int i) {
-	if(!DEBUGGING_MODE)
-		return;
+    if(!DEBUGGING_MODE)
+        return;
 	qDebug() << i;
 }
 
-
+void q(bool b) {
+    if(!DEBUGGING_MODE)
+        return;
+    qDebug() << b;
+}
 
 
 
