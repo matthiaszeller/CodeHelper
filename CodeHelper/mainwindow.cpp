@@ -15,7 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+	// Save
     save_gui();
+	// Delete actions
+	for (QAction *a : m_MapAction)
+		delete a;
+	// Other
 	delete ui;
 	delete m_Comments;
 }
@@ -37,11 +42,10 @@ void MainWindow::init_gui() {
 
 	// Setup default values for widgets
 
-	// TAB - Prettify
+	// /////// TAB - Prettify
 
 	// Comment style
 	ui->comboBox_prettify_style->setCurrentText(DEFAULT_COMMENT_STYLE);
-	// Filling characters
 	// QPlainTextEdit paragraph symbols
 	QTextOption option;
 	option.setFlags(QTextOption::ShowLineAndParagraphSeparators);
@@ -53,14 +57,20 @@ void MainWindow::init_gui() {
 	// QSlider for comment width
 	ui->horizontalSlider_prettify_comment_block->setValue(DEFAULT_COMMENT_BLOCK_WIDTH);
 	this->on_horizontalSlider_prettify_comment_block_sliderMoved(DEFAULT_COMMENT_BLOCK_WIDTH);
-	// Default filling char
+	// Default filling chars
 	ui->comboBox_prettify_filling_char->addItems(COMMENTS_FILLING_CHARACTERS);
 	ui->comboBox_prettify_filling_char->setCurrentText(DEFAULT_FILLING_CHAR);
 	ui->comboBox_prettify_filling_char2->addItems(COMMENTS_FILLING_CHARACTERS);
 	ui->comboBox_prettify_filling_char2->setCurrentText(DEFAULT_FILLING_CHAR);
 	ui->checkBox_prettify_link->setChecked(DEFAULT_FILLING_CHARS_LINKAGE);
+	// Default number of lines for a comment block
+	bool defaultIs1 = (DEFAULT_COMMENT_LINE_NUMBER == 1);
+	if (defaultIs1)
+		ui->radioButton_prettify_1line->click();
+	else
+		ui->radioButton_prettify_3lines->click();
 
-	// TAB - CPP HELPER
+	// /////// TAB - CPP HELPER
 	QFont font("Monospace");
 	font.setStyleHint(QFont::TypeWriter);
 	ui->lineEdit_tools_pattern->setFont(font);
@@ -223,6 +233,7 @@ void MainWindow::on_checkBox_prettify_capitalize_stateChanged(int) {
 // ================================================================ //
 
 void MainWindow::update_cpp_helper() {
+
 
 /*
  *

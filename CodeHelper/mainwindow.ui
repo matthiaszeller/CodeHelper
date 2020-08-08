@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>862</width>
-    <height>767</height>
+    <width>899</width>
+    <height>922</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,7 +56,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -162,7 +162,7 @@
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>Prettify text</string>
+        <string>Prettify comments</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -271,12 +271,6 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <layout class="QFormLayout" name="formLayout"/>
-           </item>
-           <item>
-            <layout class="QGridLayout" name="gridLayout_2"/>
-           </item>
-           <item>
             <layout class="QGridLayout" name="gridLayout_5">
              <item row="1" column="0">
               <widget class="QLabel" name="label_5">
@@ -354,41 +348,65 @@
                </property>
               </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QPlainTextEdit" name="plainTextEdit_prettify"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QPushButton" name="pushButton_prettify_copy">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_15">
                <property name="text">
-                <string>Copy</string>
+                <string>Line number:</string>
                </property>
               </widget>
              </item>
-             <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="2" column="1">
+              <widget class="QRadioButton" name="radioButton_prettify_1line">
+               <property name="text">
+                <string>1</string>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
+              </widget>
+             </item>
+             <item row="2" column="2" colspan="2">
+              <widget class="QRadioButton" name="radioButton_prettify_3lines">
+               <property name="text">
+                <string>3</string>
                </property>
-              </spacer>
+              </widget>
              </item>
             </layout>
            </item>
           </layout>
          </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_8">
+          <property name="title">
+           <string>Add features</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit_prettify"/>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="pushButton_prettify_copy">
+            <property name="text">
+             <string>Copy</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -400,7 +418,7 @@
         <item>
          <widget class="QGroupBox" name="groupBox_4">
           <property name="title">
-           <string>RegExp</string>
+           <string>Regular expressions</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="1" column="1">
@@ -441,6 +459,13 @@
             <widget class="QLineEdit" name="lineEdit_tools_pattern"/>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="title">
+           <string/>
+          </property>
          </widget>
         </item>
         <item>
@@ -544,7 +569,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>862</width>
+     <width>899</width>
      <height>26</height>
     </rect>
    </property>

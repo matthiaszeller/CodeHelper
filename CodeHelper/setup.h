@@ -11,6 +11,7 @@ extern Language CURRENT_LANGUAGE;
 QString map(Language);
 Language map(QString);
 
+const int DEFAULT_COMMENT_LINE_NUMBER(3);
 const int DEFAULT_COMMENT_BLOCK_WIDTH = 40;
 const QString DEFAULT_FILLING_CHAR("=");
 const QString DEFAULT_COMMENT_STYLE("Medium");
@@ -40,6 +41,7 @@ public:
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 void q(const QString &t);
+void q(int i);
 
 
 

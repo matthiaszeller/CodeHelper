@@ -23,10 +23,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
-	// --------- Setting up
-	void init_gui();
-
 private:
 	Ui::MainWindow *ui;
 
@@ -36,13 +32,25 @@ private:
 
 
 	// --------- Custom private objects
+	//! Comments managing class
 	Comments *m_Comments;
+	//! Clipboard manager
 	QClipboard *m_Clipboard;
 
+	// --------- Manage QActions
+	//! Map of QActions, easy deletion as destruction
+	QMap<QString, QAction*> m_MapAction;
+
+	//! Save parameters of widgets
     void save_gui();
 
 private slots:
-	// Graphic interface signals
+
+	// --------- Setting up
+	//! Trigger this function (delay !) when the program starts
+	void init_gui();
+
+	// --------- GRAPHICAL INTERFACE - SIGNALS
 
 	// TAB - Text tools
 	void on_plainTextEdit_tools_textChanged();

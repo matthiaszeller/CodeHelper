@@ -63,7 +63,12 @@ void ClassManager::load_classes(QStringList files, QVector<bool> cpp_files) {
 }
 
 void ClassManager::extract_classes(const QString &file_content) {
-
+	// k represents the position in the file_content
+	int k(0);
+	while( k != -1 ) {
+		k = file_content.indexOf(QRegExp(".*class\s+([^{]+)\s*[:]?([^{]+)"));
+		q(k);
+	}
 }
 
 /*

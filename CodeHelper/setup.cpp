@@ -38,6 +38,11 @@ void q(const QString &t) {
 	qDebug() << t;
 }
 
+void q(int i) {
+	if(!DEBUGGING_MODE)
+		return;
+	qDebug() << i;
+}
 
 
 
