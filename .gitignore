@@ -1,6 +1,6 @@
 
 # Qt creator files
-*.pro.user
+*.pro.user*
 
 # Build makefiles
 *Makefile
@@ -11,3 +11,7 @@
 
 # Build
 debug/*
+
+# Python
+__pycache__
+
