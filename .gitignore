@@ -1,17 +1,27 @@
 
+
+# --- IDEs
 # Qt creator files
 *.pro.user*
 
-# Build makefiles
+
+# Pycharm
+.idea
+
+
+# --- C++ - Qt
+# Build
 *Makefile
 .qmake.stash
-
-# Jupyter notebooks checkpoints
-*.ipynb_checkpoints
-
-# Build
 debug/*
 
-# Python
+
+# --- Python
 __pycache__
+
+
+# --- Jupyter notebooks 
+# Checkpoints
+*.ipynb_checkpoints
+
 
