@@ -1,6 +1,20 @@
-# CodeHelper
+# code-helper
 
 Programmers are lazy... they need tools ! 
+
+
+# Apps 
+
+## Contents table generator
+
+File `gen_contents.py`. This parses Jupyter Notebooks and generates
+a contents table with clickable links.
+
+![Gif demo contents table](res/demo-contents-table-generator.gif)
+
+## CodeHelper executable
+
+Currently implemented in C++, Python implementation in progress...
 
 
 ## Prettify code
