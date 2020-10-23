@@ -7,7 +7,7 @@ Programmers are lazy... they need tools !
 
 ## Contents table generator
 
-File `gen_contents.py`. This parses Jupyter Notebooks and generates
+File `gen_contents.py`. This parses Jupyter Notebooks and Markdown files to generate
 a contents table with clickable links.
 
 ![Gif demo contents table](res/demo-contents-table-generator.gif)
