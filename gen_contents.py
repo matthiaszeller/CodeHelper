@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 """Generate a contents table of a jupyter notebook or a Markdown file.
 This scripts outputs to standard output, can simply copy and paste it in a markdown cell.
 
@@ -10,16 +12,21 @@ To get an un-numbered list, use optional parameter `-b` or `--bullet`.
 import argparse
 import json
 import re
+import sys
 
 
 def main():
+    if sys.version_info.major < 3:
+        raise Exception('Python version 3 is required.')
+
     parser = argparse.ArgumentParser()
-    parser.add_argument('file', help='.ipynb file')
+    parser.add_argument('file', help='jupyter notebook .ipynb file, markdown .md file')
     parser.add_argument('-b', '--bullet',
-                        help='un-numbered items, i.e. use bullets',
+                        help='generate bullet list instead of numbered list',
                         action='store_true')
     parser.add_argument('-l', '--level',
-                        help='max title level to include (default is 3)',
+                        help='maximum title depth to report in contents (depth is number of # characters), '
+                             'default is 3',
                         type=int, default=3)
 
     args = parser.parse_args()
@@ -87,12 +94,36 @@ class MarkdownReader(Reader):
         """
         bullet = '1.' if numbered else '*'
 
+        # ------ Filter w.r.t. max depth
+        titles = list(filter(lambda e: e[1] <= max_levels, titles))
+
+        # Sanitization: inconsistent titles in markdown/notebook might cause problems.
+        #               In particular, defining a 3rd-level title right after a 1st-level title
+        #               will render as a code block (because of over-indentation).
+        titles = cls.__sanitize_titles(titles)
+
+        # ------ Gen markdown items
         entries = [
             cls._gen_contents_item(*e, bullet) for e in titles
-            if e[1] <= max_levels
         ]
 
         return '\n'.join(entries)
+
+    @staticmethod
+    def __sanitize_titles(titles):
+        """Inconsistent titles in markdown/notebook might cause problems.
+        In particular, defining a 3rd-level title right after a 1st-level title
+        will render as a code block (because of over-indentation)."""
+        return titles
+        # TODO: implement title levels sanitization
+        # the code below does not have expected behaviour
+        new = []
+        last_l = titles[0][1]
+        for t, l in titles:
+            if l - last_l > 1:
+                l = last_l + 1
+            new.append((t, l))
+        return new
 
     @classmethod
     def _gen_contents_item(cls, title, level, bullet):
